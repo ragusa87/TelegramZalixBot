@@ -1,7 +1,8 @@
 
 # Elastic Beanstalk Files
 .idea
-vendors
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+var/*
+vendor/
