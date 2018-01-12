@@ -1,24 +1,10 @@
 version: 0.1
 
 phases:
-  install:
+  pre_build:
     commands:
-      - docker pull composer/composer:php7
-  build:
-    commands:
-      - ls -la
       - docker run --user $UID:$GID -v `pwd`:/app composer/composer:php7 install --prefer-dist --dev --no-autoloader --no-scripts --ignore-platform-reqs
-      - ls -la
-  post_build:
-    commands:
-      - |
-        if [ -d build ]; then
-           rm -Rf build/*
-        else
-           mkdir build
-        fi
-      - tar jcf build/zabix-$(date +%Y%m%d%H%m%S).tar.bz2 --exclude=build  *
 artifacts:
   files:
-    - build*/**
+    - */**
   discard-paths: yes
