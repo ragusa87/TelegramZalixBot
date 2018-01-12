@@ -6,7 +6,9 @@ phases:
       - docker pull composer/composer:php7
   build:
     commands:
-      - docker run -v `pwd`:/app composer/composer:php7 install --prefer-dist --dev --no-autoloader --no-scripts --ignore-platform-reqs
+      - ls -la
+      - docker run --user $UID:$GID -v `pwd`:/app composer/composer:php7 install --prefer-dist --dev --no-autoloader --no-scripts --ignore-platform-reqs
+      - ls -la
   post_build:
     commands:
       - |
