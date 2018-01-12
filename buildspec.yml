@@ -6,7 +6,7 @@ phases:
       - docker pull composer/composer:php7
   build:
     commands:
-      - docker run -v `pwd`:/app composer/composer:php7 install
+      - docker run -v `pwd`:/app composer/composer:php7 install --prefer-dist --dev --no-autoloader --no-scripts --ignore-platform-reqs
   post_build:
     commands:
       - |
