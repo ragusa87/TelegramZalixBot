@@ -15,7 +15,7 @@ phases:
         else
            mkdir build
         fi
-      - tar jcf --exclude=build build/zabix-$(date +%Y%m%d%H%m%S).tar.bz2 *
+      - tar jcf build/zabix-$(date +%Y%m%d%H%m%S).tar.bz2 --exclude=build  *
 artifacts:
   files:
     - build*/**
