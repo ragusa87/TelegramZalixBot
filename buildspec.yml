@@ -7,6 +7,6 @@ phases:
 artifacts:
   files:
     - '*'
-    - '*/*'
+    - '**/*'
     - 'vendor'
   discard-paths: no
