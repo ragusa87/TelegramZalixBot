@@ -6,5 +6,5 @@ phases:
       - docker run --user $UID:$GID -v `pwd`:/app composer/composer:php7 install --prefer-dist --dev --no-autoloader --no-scripts --ignore-platform-reqs
 artifacts:
   files:
-    - '*/**'
+    - '*'
   discard-paths: yes
