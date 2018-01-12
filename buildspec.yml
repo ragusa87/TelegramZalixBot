@@ -1,0 +1,18 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - docker pull composer/composer:php7
+  build:
+    commands:
+      - docker run -v `pwd`:/app composer/composer:php7 install
+  post_build:
+    commands:
+      - [ -d build ] && rm -Rf build/*
+      - mkdir build
+      - tar jcf --exclude=build/ build/zabix-$(date +%Y%m%d%H%m%S).tar.bz2 *
+artifacts:
+  files:
+    - build*/**
+  discard-paths: yes
