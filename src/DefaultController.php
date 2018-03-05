@@ -22,14 +22,29 @@ class DefaultController
     protected function getFileLocation($api, $file = "admin")
     {
         $smallApi = substr($api, 0, 2);
-        return __DIR__ . "/" . $smallApi . "/" . $file . "id";
+        return __DIR__ . "/../" . $smallApi . "/" . $file . "id";
     }
 
+    /**
+     * @param $api
+     * @param $file
+     * @return int
+     */
     protected function getId($api, $file)
     {
-        return intval(file_get_contents($this->getFileLocation($api, $file)));
+        $file = $this->getFileLocation($api, $file);
+        if (false === file_exists($file)) {
+            return 0;
+        }
+        return intval(file_get_contents($file));
     }
 
+    /**
+     * @param $api
+     * @param $file
+     * @param $id
+     * @return bool|int
+     */
     protected function saveId($api, $file, $id)
     {
         return file_put_contents($this->getFileLocation($api, $file), intval($id));
