@@ -31,8 +31,17 @@ And you should host this over https, and set a webhook.
 ### Webhook
 To set a webhook use this:
 
-> curl -v -H "Content-Type: application/json" -X POST -d '{"url":"https://bot-domain"}' https://api.telegram.org/bot$(echo $BOT_API_TOKEN)/setwebhook
+> curl -F "url=https://%domain%/%apikey%"  https://api.telegram.org/bot%apikey%/setWebhook
 
+
+Bash example (untested):
+```bash
+echo "Enter your api token (urlencoded)"
+read BOT_API_TOKEN
+echo "Enter your domain name"
+read DOMAIN
+curl -v -H "Content-Type: application/json" -X POST -d '{"url":"https://$(echo $DOMAIN)/$(echo $BOT_API_TOKEN)"}' https://api.telegram.org/bot$(echo $BOT_API_TOKEN)/setwebhook
+```
 
 ## Licence
 MIT

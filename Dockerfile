@@ -13,6 +13,8 @@ COPY . ./
 
 RUN composer install -o
 
+RUN mkdir -p var && chmod 777 var
+
 EXPOSE 80
 
 CMD ["php", "-S",  "0.0.0.0:80"]
