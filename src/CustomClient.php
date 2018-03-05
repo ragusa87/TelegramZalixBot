@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use TelegramBot\Api\Types\Update;
+use \TelegramBot\Api\Types\Update;
 
 /**
  * Created by PhpStorm.

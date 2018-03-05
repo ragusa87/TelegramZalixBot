@@ -5,7 +5,13 @@
   "license": "MIT",
   "require": {
     "telegram-bot/api": "~2.0",
-    "monolog/monolog": "^1.23"
+    "monolog/monolog": "^1.23",
+    "symfony/config": "^3.4",
+    "symfony/http-kernel": "^3.4",
+    "symfony/http-foundation": "^3.4",
+    "symfony/routing": "^3.4",
+    "symfony/dependency-injection": "^3.4",
+    "symfony/framework-bundle": "^3.4"
   },
   "autoload": {
     "psr-4": {
