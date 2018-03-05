@@ -1,19 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: laurent
- * Date: 05.03.18
- * Time: 19:50
- */
-
 namespace App;
 
-
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use TelegramBot\Api\Types\Message;
 
 class DefaultController
@@ -22,7 +11,7 @@ class DefaultController
     protected function getFileLocation($api, $file = "admin")
     {
         $smallApi = substr($api, 0, 2);
-        return __DIR__ . "/../" . $smallApi . "/" . $file . "id";
+        return __DIR__ . "/../var/" . $smallApi . "/" . $file . "id";
     }
 
     /**
@@ -58,7 +47,7 @@ class DefaultController
         /** @var CustomClient $bot */
         $bot = new CustomClient($apiKey, null); // $_ENV['TRACKER_API_KEY']
         $bot->message(
-            function (Message $message) use ($bot, $adminId, $userId, $apiKey,$that) {
+            function (Message $message) use ($bot, $adminId, $userId, $apiKey, $that) {
                 // Handle admin messages
                 if (!empty($adminId)) {
                     if ($message->getChat()->getId() === $adminId && $adminId > 0) {
@@ -102,7 +91,7 @@ class DefaultController
         );
         $bot->command(
             'stop',
-            function (Message $message) use ($bot, $adminId, $apiKey,$that) {
+            function (Message $message) use ($bot, $adminId, $apiKey, $that) {
                 $that->saveId($apiKey, "admin", 0);
                 $bot->sendMessage($message->getChat()->getId(), "Guest leaving..");
                 if ($adminId > 0) {
@@ -114,7 +103,7 @@ class DefaultController
         );
         $bot->command(
             'admin',
-            function (Message $message) use ($bot, $adminId, $apiKey,$that) {
+            function (Message $message) use ($bot, $adminId, $apiKey, $that) {
 
                 if ($adminId === $message->getChat()->getId() && $adminId > 0) {
                     $that->saveId($apiKey, "admin", 0);
