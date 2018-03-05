@@ -5,13 +5,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use TelegramBot\Api\Types\Message;
 
+/**
+ * Handle telegram messages from client and send answers
+ * @package App
+ *
+ */
 class DefaultController
 {
-
+    /**
+     * @param $api
+     * @param string $file
+     * @return string
+     */
     protected function getFileLocation($api, $file = "admin")
     {
         $smallApi = substr($api, 0, 2);
-        return __DIR__ . "/../var/" . $smallApi . "/" . $file . "id";
+        return __DIR__ . "/../var/" . $smallApi . "_" . $file . "id";
     }
 
     /**
@@ -39,6 +48,11 @@ class DefaultController
         return file_put_contents($this->getFileLocation($api, $file), intval($id));
     }
 
+    /**
+     * @param Request $request
+     * @param $apiKey
+     * @return JsonResponse
+     */
     public function handle(Request $request, $apiKey)
     {
         $adminId = $this->getId($apiKey, "admin");
