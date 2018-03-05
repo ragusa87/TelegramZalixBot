@@ -54,15 +54,15 @@ class DefaultController
     {
         $adminId = $this->getId($apiKey, "admin");
         $userId = $this->getId($apiKey, "user");
-
+        $that = $this;
         /** @var CustomClient $bot */
         $bot = new CustomClient($apiKey, null); // $_ENV['TRACKER_API_KEY']
         $bot->message(
-            function (Message $message) use ($bot, $adminId, $userId, $apiKey) {
+            function (Message $message) use ($bot, $adminId, $userId, $apiKey,$that) {
                 // Handle admin messages
                 if (!empty($adminId)) {
                     if ($message->getChat()->getId() === $adminId && $adminId > 0) {
-                        $userId = $this->getId($apiKey, "user");
+                        $userId = $that->getId($apiKey, "user");
                         if ($userId > 0) {
                             // Send admin response to guest
                             $bot->sendMessage($userId, $message->getText());
@@ -87,7 +87,7 @@ class DefaultController
 
                 // Handle new guest
                 if ($userId === 0 || $userId !== $message->getChat()->getId()) {
-                    $this->saveId($apiKey, "user", $message->getChat()->getId());
+                    $that->saveId($apiKey, "user", $message->getChat()->getId());
                     $bot->sendMessage($message->getChat()->getId(), 'You are a guest');
                     return false;
                 }
@@ -102,8 +102,8 @@ class DefaultController
         );
         $bot->command(
             'stop',
-            function (Message $message) use ($bot, $adminId, $apiKey) {
-                $this->saveId($apiKey, "admin", 0);
+            function (Message $message) use ($bot, $adminId, $apiKey,$that) {
+                $that->saveId($apiKey, "admin", 0);
                 $bot->sendMessage($message->getChat()->getId(), "Guest leaving..");
                 if ($adminId > 0) {
                     $bot->sendMessage($adminId, "Guest left");
@@ -114,10 +114,10 @@ class DefaultController
         );
         $bot->command(
             'admin',
-            function (Message $message) use ($bot, $adminId, $apiKey) {
+            function (Message $message) use ($bot, $adminId, $apiKey,$that) {
 
                 if ($adminId === $message->getChat()->getId() && $adminId > 0) {
-                    $this->saveId($apiKey, "admin", 0);
+                    $that->saveId($apiKey, "admin", 0);
                     $bot->sendMessage(
                         $message->getChat()->getId(),
                         "You are not an admin anymore"
@@ -126,7 +126,7 @@ class DefaultController
                     return false;
                 }
                 if ($message->getText() === "/admin " . date("Ymd")) {
-                    $this->saveId($apiKey, "admin", $message->getChat()->getId());
+                    $that->saveId($apiKey, "admin", $message->getChat()->getId());
                     $bot->sendMessage(
                         $message->getChat()->getId(),
                         "You are now an admin as id: " . $message->getChat()->getId()
