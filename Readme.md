@@ -45,15 +45,6 @@ read DOMAIN
 curl -v -H "Content-Type: application/json" -X POST -d '{"url":"https://$(echo $DOMAIN)/$(echo $BOT_API_TOKEN)"}' https://api.telegram.org/bot$(echo $BOT_API_TOKEN)/setwebhook
 ```
 
-Bash example (untested):
-```bash
-echo "Enter your api token (urlencoded)"
-read BOT_API_TOKEN
-echo "Enter your domain name"
-read DOMAIN
-curl -v -H "Content-Type: application/json" -X POST -d '{"url":"https://$(echo $DOMAIN)/$(echo $BOT_API_TOKEN)"}' https://api.telegram.org/bot$(echo $BOT_API_TOKEN)/setwebhook
-```
-
 ## Licence
 MIT
 
