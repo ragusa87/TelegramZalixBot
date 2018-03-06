@@ -36,10 +36,18 @@ To set a webhook use this:
 
 > curl -F "url=https://%domain%/%apikey%" https://api.telegram.org/bot%apikey%/setWebhook
 
-
 Bash example (untested):
 ```bash
 echo "Enter your api token (urlencoded : => %3A)"
+read BOT_API_TOKEN
+echo "Enter your domain name"
+read DOMAIN
+curl -v -H "Content-Type: application/json" -X POST -d '{"url":"https://$(echo $DOMAIN)/$(echo $BOT_API_TOKEN)"}' https://api.telegram.org/bot$(echo $BOT_API_TOKEN)/setwebhook
+```
+
+Bash example (untested):
+```bash
+echo "Enter your api token (urlencoded)"
 read BOT_API_TOKEN
 echo "Enter your domain name"
 read DOMAIN
