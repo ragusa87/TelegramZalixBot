@@ -30,11 +30,12 @@ class Kernel extends BaseKernel
     protected function configureRoutes(RouteCollectionBuilder $routes)
     {
         $routes->add('/{apiKey}', 'kernel:telegramAction');
+        $routes->add('/{apiKey}/notify-admin', 'kernel:notifyAction');
         $routes->add("/", "kernel:indexAction");
     }
 
     /**
-     * Tiny wrapper for DefaultController
+     * Tiny wrapper for DefaultController:handle
      */
     public function telegramAction(Request $request, $apiKey)
     {
@@ -42,6 +43,13 @@ class Kernel extends BaseKernel
         return $default->handle($request, $apiKey);
     }
 
+    /**
+     * Tiny wrapper for DefaultController:notify
+     */
+    public function notifyAction(Request $request, $apiKey){
+        $default = new \App\DefaultController();
+        return $default->notify($request, $apiKey);
+    }
     /**
      * Homepage
      */

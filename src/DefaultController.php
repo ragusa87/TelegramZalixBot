@@ -1,8 +1,11 @@
 <?php
+
 namespace App;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Types\Message;
 
 /**
@@ -147,6 +150,28 @@ class DefaultController
             }
         );
         $bot->run();
+        return new JsonResponse("OK");
+    }
+
+    /**
+     * @param Request $request
+     * @param $apiKey
+     * @return Response
+     * @throws \TelegramBot\Api\Exception
+     * @throws \TelegramBot\Api\InvalidArgumentException
+     */
+    public function notify(Request $request, $apiKey)
+    {
+        $message = $request->get("message");
+        if (empty($message)) {
+            return new JsonResponse("You must send a message parameter", 403);
+        }
+        $adminId = $this->getId($apiKey, "admin");
+        if (0 === $adminId) {
+            return new JsonResponse(sprintf("No admin yet to send << %s >>",$message), 404);
+        }
+        $bot = new BotApi($apiKey);
+        $bot->sendMessage($adminId, $message);
         return new JsonResponse("OK");
     }
 }
