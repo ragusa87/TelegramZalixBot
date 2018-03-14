@@ -171,6 +171,15 @@ class DefaultController
             return new JsonResponse(sprintf("No admin yet to send << %s >>",$message), 404);
         }
         $bot = new BotApi($apiKey);
+
+        // Send to guest
+        $notif = $request->get("notify");
+        $guestId = $this->getId($apiKey,"user");
+        if (false === empty($notif) && guestId > 0) {
+            $bot->sendMessage($guestId,$notif);
+        }
+
+        // Send to admin
         $bot->sendMessage($adminId, $message);
         return new JsonResponse("OK");
     }
