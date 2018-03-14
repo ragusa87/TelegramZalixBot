@@ -175,7 +175,7 @@ class DefaultController
         // Send to guest
         $notif = $request->get("notify");
         $guestId = $this->getId($apiKey,"user");
-        if (false === empty($notif) && guestId > 0) {
+        if (false === empty($notif) && $guestId > 0) {
             $bot->sendMessage($guestId,$notif);
         }
 
